@@ -6,4 +6,9 @@ let ProductSchema = new Schema({
     price: {type: Number, required: true}
 })
 
+let NoteSchema = new Schema({
+    author: {type: String, required: true, max: 100},
+    date: {type: Date, default: Date.now()},
+})
+
 module.exports = mongoose.model('Product', ProductSchema)
