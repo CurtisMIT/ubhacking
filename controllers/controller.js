@@ -43,3 +43,15 @@ exports.post_get = (req, res) => {
     res.send(product.value)
   })
 }
+
+exports.upvote = async (req, res) => {
+  res.send(Post.findById(req.body.id))
+  Post.findById(req.body.id).upvote += 1
+  res.send(Post.findById(req.body.id))
+  await Post.save((err) => {
+      if (err) {
+          return next(err)
+      }
+      res.send('Note created successfully')
+  })
+}

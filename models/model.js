@@ -4,6 +4,7 @@ const Schema = mongoose.Schema
 let NoteSchema = new Schema({
     author: {type: String, required: true, max: 100},
     date: {type: String, default: Date.now().toString()},
+    category: {type: String}
 })
 
 let PostSchema = new Schema({
