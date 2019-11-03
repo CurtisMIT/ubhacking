@@ -1,47 +1,76 @@
 const Product = require('../models/model')
 const Post = require('../models/model')
+const Note = require('../models/model')
 exports.test = (req, res) => {
     res.send('Greetings from the test controller')
 }
 
 exports.note_create = (req, res) => {
-    let note = new Note({
-        author: req.body.author,
-        date: req.body.date
-    })
+    const note = new Note(req.body)
 
-    note.save((err) => {
-        if (err) {
-            return next(err)
-        }
-        res.send('Note created successfully')
+    note.save()
+    .then(note => {
+        res.json({
+            confirmation: 'success',
+            data: note
+        })
+    })
+    .catch(err => {
+        res.json({
+            confirmation: 'fail',
+            message: err.message
+        })
     })
 }
 
 exports.note_get = (req, res) => {
-  Product.findById(req.body.author, function(product){
-    res.send(product.value)
-  })
+    Note.findById(req.params.id)
+    .then(post => {
+        res.json({
+            confirmation: 'success',
+            data: post
+        })
+    })
+    .catch(err => {
+        res.json({
+            confirmation: 'fail',
+            message: err.message
+        })
+    })
 }
 
 exports.post_create = (req, res) => {
-  let post = new Post({
-    author: req.body.author,
-    note: req.body.note
-  })
-
-  post.save((err) => {
-    if (err) {
-        return next(err)
-    }
-    res.send('Note created successfully')
-  })
+    const post = new Post(req.body)
+    post.save()
+    .then(post => {
+        res.json({
+            confirmation: 'success',
+            data: post
+        })
+    })
+    .catch(err => {
+        res.json({
+            confirmation: 'fail',
+            message: err.message
+        })
+    })
 }
 
 exports.post_get = (req, res) => {
-  Post.findById(req.body.author, function(product){
-    res.send(product.value)
-  })
+    const id = req.body.id
+    Post.findById(id)
+    .then(post => {
+        res.json({
+            confirmation: 'success',
+            data: post
+        })
+    })
+    .catch(err => {
+        res.json({
+            confirmation: 'fail',
+            message: 'Post: ' + id + ' not found'
+        })
+    })
 }
 
 exports.upvote = async (req, res) => {
@@ -54,4 +83,37 @@ exports.upvote = async (req, res) => {
       }
       res.send('Note created successfully')
   })
+}
+
+exports.post_get_all = (req, res) => {
+    Post.find()
+    .then(posts => {
+        res.json({
+            confirmation: 'success',
+            data: posts
+        })
+    })
+    .catch(err => {
+        res.json({
+            confirmation: 'fail',
+            message: err.message
+        })
+    })
+}
+
+exports.post_get_by_category = (req, res) => {
+    let category = req.params.category
+    Post.find({category: category})
+    .then(posts => {
+        res.json({
+            confirmation: 'success',
+            data: posts
+        })
+    })
+    .catch(err => {
+        res.json({
+            confirmation: 'fail',
+            message: err.message
+        })
+    })
 }

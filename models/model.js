@@ -4,7 +4,8 @@ const Schema = mongoose.Schema
 let NoteSchema = new Schema({
     author: {type: String, required: true, max: 100},
     date: {type: String, default: Date.now().toString()},
-    category: {type: String}
+    category: {type: String},
+    title: {type: String, required: true, max: 100}
 })
 
 let PostSchema = new Schema({
@@ -12,7 +13,8 @@ let PostSchema = new Schema({
     date: {type: String, default: Date.now().toString()},
     upvotes: {type: Number, default: 0},
     downvotes: {type: Number, default: 0},
-    note: {type: NoteSchema, required: true}
+    title: {type: String, required: true, max: 100}
+    // note: {type: NoteSchema, required: true}
 })
 
 module.exports = mongoose.model('Note', NoteSchema)
