@@ -17,3 +17,9 @@ exports.note_create = (req, res) => {
         res.send('Note created successfully')
     })
 }
+
+exports.note_get = (req, res) => {
+  Product.findById(req.body.author, function(product){
+    res.send(product.value)
+  })
+}
