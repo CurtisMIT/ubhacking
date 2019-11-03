@@ -48,7 +48,7 @@ const product = require('./routes/route')
 const app = express()
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
-app.use('/product', product)
+app.use('/api', product)
 
 // POST: uploading a file
 app.post('/test_create', upload.single('file'), (req, res) => {
