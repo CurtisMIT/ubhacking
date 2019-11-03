@@ -10,5 +10,6 @@ const product_controller = require('../controllers/controller');
 router.get('/test', product_controller.test)
 // router.post('/test_create', upload.single('file'), product_controller.test_create)
 router.post('/create', product_controller.note_create)
-router.get('/get', product_controller.note_get)
+router.get('/getNote', product_controller.note_get)
+router.get('/getPost', product_controller.post_get)
 module.exports = router;
