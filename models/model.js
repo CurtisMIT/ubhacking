@@ -1,14 +1,18 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-let ProductSchema = new Schema({
-    name: {type: String, required: true, max: 100},
-    price: {type: Number, required: true}
-})
-
 let NoteSchema = new Schema({
     author: {type: String, required: true, max: 100},
-    date: {type: Date, default: Date.now()},
+    date: {type: String, default: Date.now().toString()},
 })
 
-module.exports = mongoose.model('Product', ProductSchema)
+let PostSchema = new Schema({
+    author: {type: String, required: true, max: 100},
+    date: {type: String, default: Date.now().toString()},
+    upvotes: {type: Number, default: 0},
+    downvotes: {type: Number, default: 0},
+    note: {type: NoteSchema, required: true}
+})
+
+module.exports = mongoose.model('Note', NoteSchema)
+module.exports = mongoose.model('Post', PostSchema)
