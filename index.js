@@ -1,4 +1,5 @@
-const uri = "mongodb+srv://user:s050097@cluster0-lrnkr.mongodb.net/test?retryWrites=true&w=majority";
+const uri1 = "mongodb+srv://user:s050097@cluster0-lrnkr.mongodb.net/test?retryWrites=true&w=majority";
+const uri = 'mongodb+srv://Curtis:s11228curtwin2@cluster0-afj5c.mongodb.net/test?retryWrites=true&w=majority'
 // app.js
 const express = require('express')
 const bodyParser = require('body-parser')
@@ -8,6 +9,7 @@ const GridFsStorage = require('multer-gridfs-storage')
 const Grid = require('gridfs-stream')
 const crypto = require('crypto')
 const path = require('path')
+const cors = require('cors')
 
 mongoose.connect(uri)
 // mongoose.Promise = global.Promise
@@ -44,11 +46,15 @@ const upload = multer({ storage });
 // const db = mongoose.connection
 // db.on('error', console.error.bind(console, 'MongoDB connection error:'))
 
-const product = require('./routes/route')
+const api = require('./routes/route')
 const app = express()
+app.use(cors())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
-app.use('/api', product)
+app.use('/api', api)
+app.get('/', (req, res) => {
+    res.send('Hello World')
+})
 
 // POST: uploading a file
 app.post('/test_create', upload.single('file'), (req, res) => {
